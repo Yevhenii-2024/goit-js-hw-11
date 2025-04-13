@@ -1,6 +1,8 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
+import { massageError } from './js/pixabay-api';
+
 export function createMarkup(array) {
     const markUp = array
         .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => {
@@ -20,6 +22,24 @@ export function createMarkup(array) {
         }).join('');
     renderGallery(markUp);
 };
+
+const loadMore = document.querySelector('[data-showMore]');
+
+loadMore.addEventListener('click', showMore);
+
+let page = 1;
+
+async function showMore() {
+  page++
+    loadMore.disabled = true;
+    
+    try { 
+            
+
+    } catch (error) {
+        massageError(error.massage);
+    }
+}
 
 export function renderGallery(string = '') {
     const gallery = document.querySelector('.gallery');
